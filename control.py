@@ -2,12 +2,13 @@
 # Control class is used to control the flow of the program
 
 import os 
-
+from programcontrol import ProgramControl
 
 class Control:
     def __init__(self):
         self._options = ("1. Driver scanner (+ Dowload)", "2. Uninstall/install", "3. Everything", "4. Edit text file", "5. Exit", "")
-        self._file_path = '/edit/edit.txt'
+        self._file_path = "edit_folder\edit.txt"
+        self._program_control = ProgramControl()
 
     # This method is used to write the menu
     def write_option(self):
@@ -20,11 +21,11 @@ class Control:
             try:
                 option = int(input("Keywords>"))
                 if option == 1:
-                    return 1
+                    pass
                 elif option == 2:
-                    return 2
+                    self._program_control.main(self.read_file())
                 elif option == 3:
-                    self.read_file()
+                    pass
                 elif option == 4:
                     self.edit_file()
                     self.read_file()
@@ -36,14 +37,19 @@ class Control:
                 print("Invalid option. Please try again.")
 
     def edit_file(self):
+        # Open the file      
         if os.path.exists(self._file_path):
             os.startfile(self._file_path)
 
     def read_file(self):
+        # Read the file
         if os.path.exists(self._file_path):
+            lines = []
             with open(self._file_path, 'r') as file:
-                for line in file.strip():
-                    print(line)
+                for line in file.readlines():
+                   lines.append(line.strip())
+            return lines
+        return None
 
     # This method is used to control the flow of the program
     def main(self):
