@@ -2,7 +2,10 @@
 # Control class is used to control the flow of the program
 
 import os 
-from programcontrol import ProgramControl
+import ctypes
+import sys
+from program_control import ProgramControl
+from driver_scanner import DriverScanner
 
 class Control:
     def __init__(self):
@@ -21,7 +24,8 @@ class Control:
             try:
                 option = int(input("Keywords>"))
                 if option == 1:
-                    pass
+                    self._driver_scanner = DriverScanner()
+                    self._driver_scanner.main()
                 elif option == 2:
                     self._program_control.main(self.read_file())
                 elif option == 3:
@@ -50,7 +54,7 @@ class Control:
                    lines.append(line.strip())
             return lines
         return None
-
+    
     # This method is used to control the flow of the program
     def main(self):
         while True:

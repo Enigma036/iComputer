@@ -1,4 +1,1 @@
-Hello world
-OK
-PRINT
-!ScreenConnect
+#C#C:\TomasHanak\ScreenConnect_23.2.9.8466_Release.msi
