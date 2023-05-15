@@ -15,7 +15,7 @@ class ProgramControl:
             time.sleep(1)
             screen_width, screen_height = pyautogui.size()
             print(screen_width, screen_height)
-            button1_x, button1_y = pyautogui.locateCenterOnScreen('discord.png')
+            button1_x, button1_y = pyautogui.locateCenterOnScreen('discord.png', confidence=0.7)
             pyautogui.moveTo(button1_x, button1_y)
             pyautogui.click()
         except Exception as e:

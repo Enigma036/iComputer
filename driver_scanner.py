@@ -1,17 +1,15 @@
 # Purpose: To scan the driver
 
 # Import libraries
+import os
+import urllib.request
 import wmi
 import platform
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import webbrowser
 from fuzzywuzzy import fuzz
-import time 
 
 class DriverScanner:
     def __init__(self, url="https://www.nvidia.com/Download/index.aspx?lang=en-us"):
@@ -105,6 +103,28 @@ class DriverScanner:
             print(f"{info_success} {info}")
         else:
             print(f"{info_error}")
+        
+    def download_driver(self, path):
+        
+        file_url = path 
+        file_path = "C:/Downloads/nvidia.exe"
+        
+        print(f"Downloading driver ...")
+        try:
+            urllib.request.urlretrieve(file_url, file_path)
+        except Exception as e:
+            try:
+                file_path = "nvidia.exe"
+                urllib.request.urlretrieve(file_url, file_path)
+            except Exception as e:
+                print(f"Process has failed: {str(e)}")
+                return None
+        
+        absolute_path = os.path.abspath(file_path)
+
+        print(f"Driver downloaded to {absolute_path}")
+        
+        return absolute_path
             
     def main(self):
         gpu = self.get_gpu_info()
@@ -124,25 +144,25 @@ class DriverScanner:
             try:
                 # Click on button
                 button = self._driver.find_element(By.CLASS_NAME, 'btn_drvr_lnk_txt')
-                button_text = button.text
                 button.click()
             except:
                 break
             
             
-        # Najděte první odkaz s atributem onclick obsahujícím řetězec "nvEventTracker"
+        # Find element by xpath
         xpath_expression = '//a[contains(@onclick, "nvEventTracker")]'
         element = self._driver.find_element(By.XPATH, xpath_expression)
 
-        # Získání hodnoty atributu href
+        # Get the value of the href attribute of the element
         href_value = element.get_attribute('href')
 
-        # Výpis hodnoty atributu href
-        print(href_value)
-
-
-        # Ukončení prohlížeče
+        # Download driver
+        value = self.download_driver(href_value)
+        
+        # Close browser
         self._driver.quit()
+        
+        return value
 
     def __str__(self):
         return "Driver Scan"
