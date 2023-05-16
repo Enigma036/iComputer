@@ -3,25 +3,64 @@
 # Import statements
 import os
 import subprocess
-import time
+from time import sleep
 import pyautogui
+import re
+
 
 class ProgramControl:
     def __init__(self):
-        pass
+        self._default_value = 60
     
-    def install_crowdstrike(self):
-        try:
-            time.sleep(1)
-            screen_width, screen_height = pyautogui.size()
-            print(screen_width, screen_height)
-            button1_x, button1_y = pyautogui.locateCenterOnScreen('discord.png', confidence=0.7)
-            pyautogui.moveTo(button1_x, button1_y)
-            pyautogui.click()
-        except Exception as e:
-            print(e)
-            print("Cannot find discord")
+    def divide(self, text):
+    
+        match_hashtag = re.search(r"#(.*?)#", text)
+        hashtag_text = match_hashtag.group(1) if match_hashtag else ""
         
+        match_brackets = re.search(r"\[(.*?)\]", text)
+        brackets_text = match_brackets.group(1) if match_brackets else ""
+        
+        rest_text = re.sub(r"#.*?#|\[.*?\]", "", text)
+
+        return hashtag_text, brackets_text, rest_text
+    
+    def install_with_guide(self, path, time_limit, image_path):
+        os.startfile(path)
+        for i in range(len(image_path)):
+            check = True
+            
+            try:
+                time = len(time_limit[i])
+            except:
+                time = self._default_value
+                
+            for y in range(time):
+                sleep(1)
+                button_location = pyautogui.locateCenterOnScreen(image_path[i], confidence=0.75)   
+                if button_location != None:
+                    button1_x, button1_y = button_location
+                    pyautogui.moveTo(button1_x, button1_y)
+                    pyautogui.click()
+                    check = False
+                    break
+            if check:
+                break
+        
+        if check:
+            print("Cannot install " + path + ".")    
+            
+    def images_path(self, file_path):
+        paths = []
+
+        files = os.listdir("photos/" + file_path)
+
+        for file in files:
+            cesta = os.path.abspath(os.path.join("photos", file_path, file))
+            if file.lower().endswith((".png", ".jpg")):
+                paths.append(cesta)
+
+        return paths
+
     def install(self, path):
         if os.path.exists(path):
             os.startfile(path)
@@ -57,9 +96,15 @@ class ProgramControl:
                     if line[1] == "#":
                         self.install(line[2:])
                         input("Press enter to continue...")
-                    elif line[1] == "C" and line[2] == "#":
-                        #self.install(line[3:])
-                        self.install_crowdstrike()
+                    elif line.count("#") == 2:
+                        hashtag_text, brackets_text, rest_text = self.divide(line)
+                        image_paths = self.images_path(hashtag_text)
+                        try:
+                            time_limit = brackets_text.split(";")
+                        except:
+                            time_limit = None
+                        file_path = rest_text
+                        self.install_with_guide(file_path, time_limit, image_paths)
                     else:
                         self.install(line[1:])
             except:
