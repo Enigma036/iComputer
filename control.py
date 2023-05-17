@@ -2,8 +2,6 @@
 # Control class is used to control the flow of the program
 
 import os 
-import ctypes
-import sys
 from program_control import ProgramControl
 from driver_scanner import DriverScanner
 

@@ -1,0 +1,7 @@
+pyautogui
+re
+urllib.request
+wmi
+platform
+selenium
+fuzzywuzzy
