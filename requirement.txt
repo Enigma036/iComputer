@@ -1,5 +1,4 @@
 pyautogui
 wmi
-platform
 selenium
 fuzzywuzzy
