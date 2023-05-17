@@ -1,5 +1,4 @@
 pyautogui
-urllib
 wmi
 platform
 selenium
