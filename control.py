@@ -4,10 +4,11 @@
 import os 
 from program_control import ProgramControl
 from driver_scanner import DriverScanner
+from rename_computer import RenameComputer
 
 class Control:
     def __init__(self):
-        self._options = ("1. Driver scanner (+ Dowload)", "2. Uninstall/install", "3. Everything", "4. Edit text file", "5. Exit", "")
+        self._options = ("1. Driver scanner (+ Dowload)", "2. Uninstall/install", "3. Rename the computer", "4. Everything", "5. Edit text file", "6. Exit", "")
         self._file_path = "edit_folder\edit.txt"
         self._program_control = ProgramControl()
 
@@ -27,11 +28,14 @@ class Control:
                 elif option == 2:
                     self._program_control.main(self.read_file())
                 elif option == 3:
-                    pass
+                    self._rename_computer = RenameComputer()
+                    self._rename_computer.rename()
                 elif option == 4:
+                    pass
+                elif option == 5:
                     self.edit_file()
                     self.read_file()
-                elif option == 5:
+                elif option == 6:
                     exit()
                 else:
                     print("Invalid option. Please try again.")
