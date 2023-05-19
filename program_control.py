@@ -35,7 +35,6 @@ class ProgramControl:
                 time = self._default_value
                 
             for y in range(time):
-                print(y)
                 sleep(1)
                 button_location = pyautogui.locateCenterOnScreen(image_path[i], confidence=0.75)   
                 if button_location != None:

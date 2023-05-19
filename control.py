@@ -31,7 +31,17 @@ class Control:
                     self._rename_computer = RenameComputer()
                     self._rename_computer.rename()
                 elif option == 4:
-                    pass
+                    # Rename the computer
+                    self._rename_computer = RenameComputer()
+                    self._rename_computer.rename()
+                    
+                    # Install the program
+                    self._program_control.main(self.read_file())
+                    
+                    # Scan for drivers
+                    self._driver_scanner = DriverScanner()
+                    self._driver_scanner.main()
+                    
                 elif option == 5:
                     self.edit_file()
                     self.read_file()
