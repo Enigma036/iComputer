@@ -26,6 +26,7 @@ class ProgramControl:
     
     def install_with_guide(self, path, time_limit, image_path):
         os.startfile(path)
+        check = True
         for i in range(len(image_path)):
             check = True
             
@@ -46,7 +47,9 @@ class ProgramControl:
             if check:
                 break
             
-        if check:
+        if check and len(image_path) == 0:
+            print("Cannot find the images.")    
+        elif check:
             print("Cannot install " + path + ".") 
         else:
             print("Installed " + path + " successfully.")   
@@ -88,6 +91,8 @@ class ProgramControl:
     def main(self, lines):
         for line in lines:
             try:
+                if not line:
+                    continue
                 if line[0] == "!":
                     if line[1] == "!":
                         self.uninstall(line[2:])
@@ -111,7 +116,30 @@ class ProgramControl:
                         self.install(line[1:])
             except:
                 print("Invalid line: " + line)
-    
+                
+    def install_driver(self, lines, driver_path):
+        check_file = True
+        for line in lines:
+            try:
+                if not line:
+                    continue
+                if line[0] == "@":
+                    check_file = False
+                    hashtag_text, brackets_text, rest_text = self.divide(line)
+                    try:
+                        image_paths = self.images_path("DRIVER")
+                    except:
+                        print("Cannot find photos/DRIVER folder.")
+                    try:
+                        time_limit = brackets_text.split(";")
+                    except:
+                        time_limit = None
+                    self.install_with_guide(driver_path, time_limit, image_paths)
+            except Exception as e:
+                print("Invalid line: " + line)
+        if check_file:
+            print("Cannot find DRIVER(@) in the file.")
+                
     def __str__(self):
         return "Program Control"    
         

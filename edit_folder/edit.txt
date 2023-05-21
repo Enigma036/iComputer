@@ -1,2 +1,5 @@
+Fisrt line is about instroducing the program, please dont rewrite it. Thanks
+
+@[30;50;40;80;90]
 !ScreenConnect
 #Connect#[60;60;60;60;60]C:\TomasHanak\ScreenConnect_23.2.9.8466_Release.msi

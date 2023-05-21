@@ -24,7 +24,8 @@ class Control:
                 option = int(input("Keywords>"))
                 if option == 1:
                     self._driver_scanner = DriverScanner()
-                    self._driver_scanner.main()
+                    path = self._driver_scanner.main()
+                    self._program_control.install_driver(self.read_file(), path)
                 elif option == 2:
                     self._program_control.main(self.read_file())
                 elif option == 3:
@@ -41,6 +42,11 @@ class Control:
                     # Scan for drivers
                     self._driver_scanner = DriverScanner()
                     self._driver_scanner.main()
+                    
+                    # Install drivers
+                    self._driver_scanner = DriverScanner()
+                    path = self._driver_scanner.main()
+                    self._program_control.install_driver(self.read_file(), path)
                     
                 elif option == 5:
                     self.edit_file()
