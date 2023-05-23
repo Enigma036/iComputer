@@ -151,6 +151,8 @@ class DriverScanner:
         if is_notebook:
             gpu_series += " (Notebooks)"
         
+        gpu_series = gpu_series.replace("GTX","")
+        
         return gpu_series
                  
             
