@@ -169,7 +169,7 @@ class DriverScanner:
         gpuSeries = self.get_gpu_series(gpu, is_notebook)
         
         self.get_driver_info(gpu, "selProductSeriesType", "Product series type:", "Product series tyoe was not found.")
-        self.get_driver_info(gpu, "selProductSeries", "Product series:", "Product series was not found.")
+        self.get_driver_info(gpuSeries, "selProductSeries", "Product series:", "Product series was not found.")
         self.get_driver_info(gpu, "selProductFamily", "Product family:", "Product family was not found.")
         self.get_driver_info(os_info, "selOperatingSystem", "Operating system:", "Operating system was not found.")    
 
