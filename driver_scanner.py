@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from fuzzywuzzy import fuzz
+from re import findall
 
 class DriverScanner:
     def __init__(self, url="https://www.nvidia.com/Download/index.aspx?lang=en-us"):
@@ -125,6 +126,33 @@ class DriverScanner:
         print(f"Driver downloaded to {absolute_path}")
         
         return absolute_path
+    
+    def change_number(self, number):
+        if len(number) == 4:
+            changed_number = number[:2]
+        elif len(number) == 3:
+            changed_number = number[:1] + '00'
+        else:
+            changed_number = number
+        return changed_number
+    
+    def get_gpu_series(self, gpu, is_notebook):
+        gpu_series = gpu.replace(" (Notebooks)","")
+        gpu_series = gpu_series.replace("Ti","")
+        gpu_series = gpu_series.replace("SUPER","")
+        
+        # Find numbers in string
+        numbers = findall(r'\d+', gpu_series)
+        for number in numbers:
+            changed_number = self.change_number(number)
+            gpu_series = gpu_series.replace(number, changed_number, 1)
+            
+        gpu_series += "Series" 
+        if is_notebook:
+            gpu_series += " (Notebooks)"
+        
+        return gpu_series
+                 
             
     def main(self):
         gpu = self.get_gpu_info()
@@ -135,6 +163,9 @@ class DriverScanner:
 
         gpu = gpu.replace("NVIDIA","")
         print(f"\n\nGPU: {gpu}")
+        
+        gpuSeries = self.get_gpu_series(gpu, is_notebook)
+        
         self.get_driver_info(gpu, "selProductSeriesType", "Product series type:", "Product series tyoe was not found.")
         self.get_driver_info(gpu, "selProductSeries", "Product series:", "Product series was not found.")
         self.get_driver_info(gpu, "selProductFamily", "Product family:", "Product family was not found.")

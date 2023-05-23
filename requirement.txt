@@ -1,5 +1,5 @@
-pyautogui
-wmi
-selenium
-fuzzywuzzy
-python-Levenshtein
+pyautogui==0.9.53
+wmi==1.5.1
+selenium==4.9.0
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.21.0
