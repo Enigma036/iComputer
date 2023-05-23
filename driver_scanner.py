@@ -148,7 +148,9 @@ class DriverScanner:
             gpu_series = gpu_series.replace(number, changed_number, 1)
             
         gpu_series += "Series" 
-        if is_notebook:
+        
+        
+        if is_notebook or True: # For now always use notebook drivers - BUT THIS IS NOT CORRECT AND NEEDS TO BE FIXED
             gpu_series += " (Notebooks)"
         
         gpu_series = gpu_series.replace("GTX","")
@@ -160,9 +162,6 @@ class DriverScanner:
         gpu = self.get_gpu_info()
         os_info, is_notebook = self.get_os_info()
         
-        if is_notebook:
-            gpu += " (Notebooks)"
-
         gpu = gpu.replace("NVIDIA","")
         print(f"\n\nGPU: {gpu}")
         
