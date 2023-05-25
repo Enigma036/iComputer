@@ -107,9 +107,7 @@ class DriverScanner:
         
     def download_driver(self, path):
         file_url = path 
-        file_path = os.path.join("C:\\", "Users", os.getlogin(), "Downloads")
-        print(file_path)
-        
+        file_path = os.path.join("C:\\", "Users", os.getlogin(), "Downloads") + "\\nvidia.exe"
         print(f"Downloading driver ...")
         try:
             urllib.request.urlretrieve(file_url, file_path)
