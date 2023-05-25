@@ -31,7 +31,7 @@ class ProgramControl:
             check = True
             
             try:
-                time = len(time_limit[i])
+                time = int(time_limit[i])
             except:
                 time = self._default_value
                 
@@ -137,6 +137,7 @@ class ProgramControl:
                     self.install_with_guide(driver_path, time_limit, image_paths)
             except Exception as e:
                 print("Invalid line: " + line)
+                print(e)
         if check_file:
             print("Cannot find DRIVER(@) in the file.")
                 

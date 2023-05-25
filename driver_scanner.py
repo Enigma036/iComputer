@@ -149,8 +149,7 @@ class DriverScanner:
             
         gpu_series += "Series" 
         
-        
-        if is_notebook or True: # For now always use notebook drivers - BUT THIS IS NOT CORRECT AND NEEDS TO BE FIXED
+        if is_notebook:
             gpu_series += " (Notebooks)"
         
         gpu_series = gpu_series.replace("GTX","")
@@ -194,6 +193,7 @@ class DriverScanner:
         # Close browser
         self._driver.quit()
         
+        print(value)
         return value
 
     def __str__(self):
