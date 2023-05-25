@@ -106,11 +106,9 @@ class DriverScanner:
             print(f"{info_error}")
         
     def download_driver(self, path):
-        
         file_url = path 
-        
-        home_dir = os.path.expanduser("~")
-        file_path = os.path.join(home_dir, "Downloads")
+        file_path = os.path.join("C:\\", "Users", os.getlogin(), "Downloads")
+        print(file_path)
         
         print(f"Downloading driver ...")
         try:
