@@ -108,7 +108,9 @@ class DriverScanner:
     def download_driver(self, path):
         
         file_url = path 
-        file_path = "C:/Downloads/nvidia.exe"
+        
+        home_dir = os.path.expanduser("~")
+        file_path = os.path.join(home_dir, "Downloads")
         
         print(f"Downloading driver ...")
         try:

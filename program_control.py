@@ -76,7 +76,7 @@ class ProgramControl:
         try:
             print("Uninstalling " + program + "...")
             program_name = program
-            command = 'wmic product where name="{}" call uninstall'.format(program_name)
+            command = f'wmic product where name="{program_name}" call uninstall /nointeractive'
 
             process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             output, error = process.communicate()
