@@ -78,9 +78,9 @@ class ProgramControl:
             program_name = program
             command = f'wmic product where name="{program_name}" call uninstall /nointeractive'
 
-            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             output, error = process.communicate()
-            
+                    
             if "ReturnValue = 0;" in output.decode("utf-8"):
                 print("Uninstalled " + program_name + " successfully.")
             elif "ReturnValue = 1603;" in output.decode("utf-8"):
