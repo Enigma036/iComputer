@@ -85,6 +85,8 @@ class ProgramControl:
                 print("Uninstalled " + program_name + " successfully.")
             elif "ReturnValue = 1603;" in output.decode("utf-8"):
                 print("Error: Uninstalled " + program_name + " unsuccessfully. Error code: 1603")
+            elif "No Instance(s) Available." in output.decode("utf-8"):
+                print("Error: Uninstalled " + program_name + " unsuccessfully. Error code: No Instance(s) Available.")
         except:
             print("Cannot uninstall " + program + ". Name does not exist.")
     
