@@ -1,5 +1,4 @@
-from control import Control
+from my_code import main_code
 
 if __name__ == '__main__':
-    control = Control()
-    control.main()
+    main_code()

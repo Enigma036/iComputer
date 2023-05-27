@@ -2,9 +2,9 @@
 # Control class is used to control the flow of the program
 
 import os 
-from program_control import ProgramControl
-from driver_scanner import DriverScanner
-from rename_computer import RenameComputer
+from .program_control import ProgramControl
+from .driver_scanner import DriverScanner
+from .rename_computer import RenameComputer
 
 class Control:
     def __init__(self):
