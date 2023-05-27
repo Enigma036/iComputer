@@ -160,7 +160,7 @@ class DriverScanner:
         os_info, is_notebook = self.get_os_info()
         
         gpu = gpu.replace("NVIDIA","")
-        print(f"\n\nGPU: {gpu}")
+        print(f"\nGPU: {gpu}")
         
         gpuSeries = self.get_gpu_series(gpu, is_notebook)
         
@@ -191,7 +191,6 @@ class DriverScanner:
         # Close browser
         self._driver.quit()
         
-        print(value)
         return value
 
     def __str__(self):
