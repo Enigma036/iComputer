@@ -14,7 +14,7 @@ class RenameComputer:
             if self._computer_name == "" and self._computer_name.isspace() == True:
                 print("Computer name cannot be empty!")
             else:
-                subprocess.call(['powershell.exe', 'Rename-Computer', '-NewName', self._computer_name, '-Force'])
+
             
             # Change computer name in Windows registry
             print(f"New name: {self._computer_name}")
