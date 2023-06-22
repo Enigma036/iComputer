@@ -5,12 +5,14 @@ import os
 from .program_control import ProgramControl
 from .driver_scanner import DriverScanner
 from .rename_computer import RenameComputer
+from os import getlogin
 
 class Control:
     def __init__(self):
         self._options = ("1. Driver scanner (+ Dowload)", "2. Uninstall/install", "3. Rename the computer", "4. Everything", "5. Edit text file", "6. Exit", "")
-        self._file_path = "edit_folder\edit.txt"
+        self._file_path = "Edit folder\Edit.txt"
         self._program_control = ProgramControl()
+        self._computer_name = getlogin()
 
     # This method is used to write the menu
     def write_option(self):
@@ -21,10 +23,10 @@ class Control:
     def select_option(self):
         while True:
             try:
-                option = int(input("Keywords>"))
+                option = int(input(f"{self._computer_name}>"))
                 if option == 1:
                     self._driver_scanner = DriverScanner()
-                    path = self._driver_scanner.main()
+                    path = self._driver_scanner.main() # "C:\\Users\\tomsn\\Documents\\GitHub\\driver-scanner\\nvidia.exe"
                     self._program_control.install_driver(self.read_file(), path)
                 elif option == 2:
                     self._program_control.main(self.read_file())
@@ -38,10 +40,6 @@ class Control:
                     
                     # Install the program
                     self._program_control.main(self.read_file())
-                    
-                    # Scan for drivers
-                    self._driver_scanner = DriverScanner()
-                    self._driver_scanner.main()
                     
                     # Install drivers
                     self._driver_scanner = DriverScanner()

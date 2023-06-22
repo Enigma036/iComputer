@@ -10,6 +10,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from fuzzywuzzy import fuzz
+from colorama import Fore, init
+init()
 from re import findall
 
 class DriverScanner:
@@ -21,6 +23,7 @@ class DriverScanner:
         chrome_options.add_experimental_option("detach", True)
         chrome_options.add_argument('--log-level=3')
         self._driver = webdriver.Chrome(options=chrome_options)
+        print(f"\n[{Fore.YELLOW}Downloading and installing driver{Fore.RESET}]")
         print("Opening browser...")
         print("Please wait...")
         self._driver.get(self._url)

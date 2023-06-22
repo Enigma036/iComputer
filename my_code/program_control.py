@@ -6,15 +6,18 @@ import subprocess
 from time import sleep
 import pyautogui
 import re
+from colorama import Fore, init
+
+init() # Initialize colorama
 
 
 class ProgramControl:
     def __init__(self):
         self._default_value = 60
     
-    def divide(self, text):
+    def divide(self, text, char="#"):
     
-        match_hashtag = re.search(r"#(.*?)#", text)
+        match_hashtag = re.search(rf"{char}(.*?){char}", text)
         hashtag_text = match_hashtag.group(1) if match_hashtag else ""
         
         match_brackets = re.search(r"\[(.*?)\]", text)
@@ -49,31 +52,41 @@ class ProgramControl:
             
         if check and len(image_path) == 0:
             print("Cannot find the images.")    
+            print(f"[{Fore.RED}Installation of driver was not successful{Fore.RESET}]")
         elif check:
             print("Cannot install " + path + ".") 
+            print(f"[{Fore.RED}Installation of driver was not successful{Fore.RESET}]")
         else:
-            print("Installed " + path + " successfully.")   
+            print(f"[{Fore.GREEN}The installation was successful{Fore.RESET}]")
             
     def images_path(self, file_path):
         paths = []
 
-        files = os.listdir("photos/" + file_path)
+        files = os.listdir("Photos/" + file_path)
 
         for file in files:
-            cesta = os.path.abspath(os.path.join("photos", file_path, file))
+            cesta = os.path.abspath(os.path.join("Photos", file_path, file))
             if file.lower().endswith((".png", ".jpg")):
                 paths.append(cesta)
 
         return paths
 
     def install(self, path):
-        if os.path.exists(path):
-            os.startfile(path)
-        else:
-            print("Path does not exist. Cannot install.")
+        print(f"\n[{Fore.YELLOW}Installing program{Fore.RESET}]")
+        try:
+            if os.path.exists(path):
+                os.startfile(path)
+            else:
+                print("Path does not exist. Cannot install.")
+                print(f"[{Fore.RED}Installation of program was not successful{Fore.RESET}]")
+        except Exception as e:
+            print(f"Error: {e}")
+            print(f"[{Fore.RED}Installation of program was not successful{Fore.RESET}]")
+        print(f"[{Fore.GREEN}Installation of program was successful{Fore.RESET}]")
             
     def uninstall(self, program):
         try:
+            print(f"\n[{Fore.YELLOW}Uninstalling program{Fore.RESET}]")
             print("Uninstalling " + program + "...")
             program_name = program
             command = f'wmic product where name="{program_name}" call uninstall /nointeractive'
@@ -82,13 +95,16 @@ class ProgramControl:
             output, error = process.communicate()
                     
             if "ReturnValue = 0;" in output.decode("utf-8"):
-                print("Uninstalled " + program_name + " successfully.")
+                print(f"[{Fore.GREEN}Uninstalled program successfully{Fore.RESET}]")
             elif "ReturnValue = 1603;" in output.decode("utf-8"):
-                print("Error: Uninstalled " + program_name + " unsuccessfully. Error code: 1603")
+                print("Error code: 1603")
+                print(f"[{Fore.RED}Cannot uninstall program{Fore.RESET}]")
             elif "No Instance(s) Available." in output.decode("utf-8"):
-                print("Error: Uninstalled " + program_name + " unsuccessfully. Error code: No Instance(s) Available.")
+                print("Error code: No Instance(s) Available.")
+                print(f"[{Fore.RED}Cannot uninstall program{Fore.RESET}]")
         except:
-            print("Cannot uninstall " + program + ". Name does not exist.")
+            print("Name does not exist.")
+            print(f"[{Fore.RED}Cannot uninstall program{Fore.RESET}]")
     
     def main(self, lines):
         for line in lines:
@@ -113,11 +129,13 @@ class ProgramControl:
                         except:
                             time_limit = None
                         file_path = rest_text
+                        print(f"\n[{Fore.YELLOW}Installing program{Fore.RESET}]") # Its here because of sharing the same code with install_driver
                         self.install_with_guide(file_path, time_limit, image_paths)
                     else:
                         self.install(line[1:])
             except:
                 print("Invalid line: " + line)
+                print(f"[{Fore.RED}Installation of program was not successful{Fore.RESET}]")
                 
     def install_driver(self, lines, driver_path):
         check_file = True
@@ -127,11 +145,13 @@ class ProgramControl:
                     continue
                 if line[0] == "@":
                     check_file = False
-                    hashtag_text, brackets_text, rest_text = self.divide(line)
+                    hashtag_text, brackets_text, rest_text = self.divide(line, "@")
                     try:
-                        image_paths = self.images_path("DRIVER")
+                        if not hashtag_text or hashtag_text == "":
+                            hashtag_text = "DRIVER"
+                        image_paths = self.images_path(hashtag_text)
                     except:
-                        print("Cannot find photos/DRIVER folder.")
+                        print("Cannot find Photos/DRIVER folder.")
                     try:
                         time_limit = brackets_text.split(";")
                     except:
@@ -140,8 +160,11 @@ class ProgramControl:
             except Exception as e:
                 print("Invalid line: " + line)
                 print(e)
+                print(f"[{Fore.RED}Installation of driver was not successful{Fore.RESET}]")
         if check_file:
             print("Cannot find DRIVER(@) in the file.")
+            print(f"[{Fore.RED}Installation of driver was not successful{Fore.RESET}]")
+            
                 
     def __str__(self):
         return "Program Control"    
