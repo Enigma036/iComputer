@@ -11,8 +11,9 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from fuzzywuzzy import fuzz
 from colorama import Fore, init
-init()
 from re import findall
+
+init() # Initialize colorama
 
 class DriverScanner:
     def __init__(self, url="https://www.nvidia.com/Download/index.aspx?lang=en-us"):

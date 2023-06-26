@@ -31,6 +31,7 @@ class ProgramControl:
         os.startfile(path)
         check = True
         for i in range(len(image_path)):
+            print(f"\nStep {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.YELLOW}starting{Fore.RESET}")
             check = True
             
             try:
@@ -46,8 +47,10 @@ class ProgramControl:
                     pyautogui.moveTo(button1_x, button1_y)
                     pyautogui.click()
                     check = False
+                    print(f"Step {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.GREEN}finished{Fore.RESET}")
                     break
             if check:
+                print(f"Step {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.RED}failed{Fore.RESET}")
                 break
             
         if check and len(image_path) == 0:
@@ -76,13 +79,14 @@ class ProgramControl:
         try:
             if os.path.exists(path):
                 os.startfile(path)
+                print("Installing program...")
+                print(f"[{Fore.GREEN}Installation of program was successful{Fore.RESET}]")
             else:
                 print("Path does not exist. Cannot install.")
                 print(f"[{Fore.RED}Installation of program was not successful{Fore.RESET}]")
         except Exception as e:
             print(f"Error: {e}")
             print(f"[{Fore.RED}Installation of program was not successful{Fore.RESET}]")
-        print(f"[{Fore.GREEN}Installation of program was successful{Fore.RESET}]")
             
     def uninstall(self, program):
         try:
