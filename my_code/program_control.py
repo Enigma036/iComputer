@@ -31,7 +31,7 @@ class ProgramControl:
         os.startfile(path)
         check = True
         for i in range(len(image_path)):
-            print(f"\nStep {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.YELLOW}starting{Fore.RESET}")
+            print(f"\nStep {Fore.CYAN}{i+1}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.YELLOW}starting{Fore.RESET}")
             check = True
             
             try:
@@ -47,10 +47,10 @@ class ProgramControl:
                     pyautogui.moveTo(button1_x, button1_y)
                     pyautogui.click()
                     check = False
-                    print(f"Step {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.GREEN}finished{Fore.RESET}")
+                    print(f"Step {Fore.CYAN}{i+1}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.GREEN}finished{Fore.RESET}")
                     break
             if check:
-                print(f"Step {Fore.CYAN}{i}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.RED}failed{Fore.RESET}")
+                print(f"Step {Fore.CYAN}{i+1}{Fore.RESET} of {Fore.CYAN}{len(image_path)}{Fore.RESET} - {Fore.RED}failed{Fore.RESET}")
                 break
             
         if check and len(image_path) == 0:
