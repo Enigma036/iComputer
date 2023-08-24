@@ -7,6 +7,7 @@
 ## Usage
 
 After launching the program, you will be presented with six options:
+<br>
 **(NOTE: ALWAYS RUN THE PROGRAM WITH ADMINISTRATIVE PRIVILEGES)**
 - Driver installer
 - Uninstall/install
