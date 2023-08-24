@@ -8,7 +8,9 @@ import platform
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from fuzzywuzzy import fuzz
 from colorama import Fore, init
 from re import findall
@@ -18,12 +20,35 @@ init() # Initialize colorama
 class DriverScanner:
     def __init__(self, url="https://www.nvidia.com/Download/index.aspx?lang=en-us"):
         self._url = url
-        chrome_options = Options()
+        chrome_options = ChromeOptions()
         chrome_options.add_argument("--headless")
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         chrome_options.add_experimental_option("detach", True)
         chrome_options.add_argument('--log-level=3')
-        self._driver = webdriver.Chrome(options=chrome_options)
+        
+        edge_options = EdgeOptions()
+        edge_options.add_argument("--headless")
+        edge_options.add_argument('--log-level=3')
+        
+        firefox_options = FirefoxOptions()
+        firefox_options.add_argument("--headless")
+        firefox_options.add_argument('--log-level=3')
+        
+        try:
+            self._driver = webdriver.Chrome(options=chrome_options)
+            print("Using Chrome browser.")
+        except:
+            try:
+                self._driver = webdriver.Edge(options=edge_options)
+                print("Using Edge browser.")
+            except:
+                try:
+                    self._driver = webdriver.Firefox(options=firefox_options)
+                    print("Using Firefox browser.")
+                except Exception as e:
+                    print(f"Error: {e}")
+                    print("Neither Chrome nor Edge nor Firefox browser is available.")
+        
         print(f"\n[{Fore.YELLOW}Downloading and installing driver{Fore.RESET}]")
         print("Opening browser...")
         print("Please wait...")

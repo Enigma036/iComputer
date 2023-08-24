@@ -9,7 +9,7 @@ from os import getlogin
 
 class Control:
     def __init__(self):
-        self._options = ("1. Driver scanner (+ Dowload)", "2. Uninstall/install", "3. Rename the computer", "4. Everything", "5. Edit text file", "6. Exit", "")
+        self._options = ("1. Driver installer", "2. Uninstall/install", "3. Rename the computer", "4. Everything", "5. Edit text file", "6. Exit", "")
         self._file_path = "Edit folder\Edit.txt"
         self._program_control = ProgramControl()
         self._computer_name = getlogin()
